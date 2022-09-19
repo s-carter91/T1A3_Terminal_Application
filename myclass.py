@@ -1,5 +1,9 @@
 class Person:
-    def __init__(self, name, regular_time_zone, current_time_zone):
+    def __init__(self, name, time_zone = ' '):
         self.name = name
-        self.regular_time_zone = regular_time_zone
-        self.current_time_zone = current_time_zone
+        self.time_zone = time_zone
+        # self.current_time_zone = current_time_zone
+
+    def set_timezone(self, x):
+        input()
+        self.timezone = x
