@@ -2,6 +2,7 @@ import time
 import datetime
 import pytz
 from simple_term_menu import TerminalMenu
+import csv
 # import myfunctions
 # import myclass
 
@@ -16,8 +17,8 @@ class Person:
         self.name = name
         self.time_zone = time_zone
     
-    def __str__(self):
-        return f'Name = {self.name}, time_zone = {self.time_zone}'
+    # def __str__(self):
+    #     return f'Name = {self.name}, time_zone = {self.time_zone}'
 
     # def update_time(self):
     #     Person.time_zone = 
@@ -44,26 +45,29 @@ def countries():
 def australia():
     options = [i for i in pytz.all_timezones if i.startswith('Australia')]
     terminal_menu = TerminalMenu(options)
-    aus_menu_entry_index = terminal_menu.show()
-    person_time_zone = options[aus_menu_entry_index]
-    return datetime.datetime.now(tz=pytz.timezone(person_time_zone)).strftime(format)
+    menu_entry_index = terminal_menu.show()
+    person_time_zone = options[menu_entry_index]
+    return person_time_zone
 def america():
     options = [i for i in pytz.all_timezones if i.startswith('America')]
     terminal_menu = TerminalMenu(options)
-    aus_menu_entry_index = terminal_menu.show()
-    person_time_zone = options[aus_menu_entry_index]
-    return datetime.datetime.now(tz=pytz.timezone(person_time_zone)).strftime(format)
+    menu_entry_index = terminal_menu.show()
+    person_time_zone = options[menu_entry_index]
+    return person_time_zone
 def europe():
     options = [i for i in pytz.all_timezones if i.startswith('Europe')]
     terminal_menu = TerminalMenu(options)
-    aus_menu_entry_index = terminal_menu.show()
-    person_time_zone = options[aus_menu_entry_index]
-    return datetime.datetime.now(tz=pytz.timezone(person_time_zone)).strftime(format)
+    menu_entry_index = terminal_menu.show()
+    person_time_zone = options[menu_entry_index]
+    return person_time_zone
 
-format = '%d-%m-%Y %H:%M'
-# def option1():
+def convert_time(timez):
+    return datetime.datetime.now(tz=pytz.timezone(timez)).strftime(forma)
+
+forma = '%d-%m-%Y %H:%M'
 
 add_another_person = 'Yes'
+
 while add_another_person == 'Yes':
     Person(name = input('Please type persons name: '), time_zone = countries())
     print('Would you like to add another person? \n')
@@ -71,13 +75,28 @@ while add_another_person == 'Yes':
     terminal_menu = TerminalMenu(options)
     add_menu_entry_index = terminal_menu.show()
     add_another_person = options[add_menu_entry_index]
+
+
+
+# for item in Person.person_time:
+#     datetime.datetime.now(tz=pytz.timezone(item)).strftime(forma)
+
+person_time = [convert_time(i) for i in Person.person_time]
+print_name_zones = {Person.person_name[i] : person_time[i] for i in range(len(Person.person_name))}
+for x in print_name_zones.keys():
+    print(f'{x} : {print_name_zones[x]}')
+
+
+# Exporting 
+with open('person_timezone.csv', 'w') as f:
+    writer = csv.writer(f)
+    for i in range(len(Person.person_name)):
+        row = Person.person_name[i], Person.person_time[i]
+        writer.writerow(row)
     
-def option2():
-    print_name_zones = {Person.person_name[i] : Person.person_time[i] for i in range(len(Person.person_name))}
-    for x in print_name_zones.keys():
-        print(f'{x} : {print_name_zones[x]}')
 
-
+    # for i in range(len(Person.person_name)):
+    #     f.write("{} {}\n".format(Person.person_name[i], Person.person_time[i]))
 
 
 
@@ -148,9 +167,9 @@ def option2():
 # for key, value in print_name_zones.items():
 #     print("{} : {}".format(key, value))
 # def option2():
-print_name_zones = {Person.person_name[i] : Person.person_time[i] for i in range(len(Person.person_name))}
-for x in print_name_zones.keys():
-    print(f'{x} : {print_name_zones[x]}')
+# print_name_zones = {Person.person_name[i] : Person.person_time[i] for i in range(len(Person.person_name))}
+# for x in print_name_zones.keys():
+#     print(f'{x} : {print_name_zones[x]}')
 # print(print_name_zones)
 
 # print(Person.time_zone)
