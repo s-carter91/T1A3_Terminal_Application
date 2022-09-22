@@ -66,34 +66,95 @@ def convert_time(timez):
 
 forma = '%d-%m-%Y %H:%M'
 
-add_another_person = 'Yes'
+def option1():
+    add_another_person = True
+    while add_another_person != 'No':
+        Person(name = input('Please type persons name: '), time_zone = countries())
+        print('Would you like to add another person? \n')
+        options = ['Yes', 'No']
+        terminal_menu = TerminalMenu(options)
+        add_menu_entry_index = terminal_menu.show()
+        add_another_person = options[add_menu_entry_index]
 
-while add_another_person == 'Yes':
-    Person(name = input('Please type persons name: '), time_zone = countries())
-    print('Would you like to add another person? \n')
-    options = ['Yes', 'No']
-    terminal_menu = TerminalMenu(options)
-    add_menu_entry_index = terminal_menu.show()
-    add_another_person = options[add_menu_entry_index]
+# option1()
+
+# Option 3:
+
+def export_csv():
+    with open('person_timezone.csv', 'w') as f:
+        writer = csv.writer(f)
+        writer.writerow(Person.person_name)
+        writer.writerow(Person.person_time)
+        # for i in range(len(Person.person_name)):
+        #     row = Person.person_name[i], Person.person_time[i]
+        #     writer.writerow(row)
+    f.close()
+
+# export_csv()
+def import_csv():
+    with open('person_timezone.csv', 'r') as f:
+        csv_reader = csv.reader(f)
+        imported_data =list(csv_reader)
+        Person.person_name=imported_data[0]
+        Person.person_time=imported_data[1]
+    f.close()
+import_csv()
+# option1()
+# with open('person_timezone.csv', 'r') as f:
+#     csv_reader = csv.reader(f)
+#     Person.person_time=list(csv_reader)[1]
+# f.close()
+
+# with open('person_timezone.csv', 'r') as f:
+#   # read the file as a dictionary for each row ({header : value})
+#     reader = csv.DictReader(f)
+#     data = {}
+#     for row in reader:
+#         for header, value in row.items():
+#             try:
+#                 data[header].append(value)
+#             except KeyError:
+#                 data[header] = [value]
+
+# # extract the variables you want
+#     name = data['Person.person_name']
+#     location = data['Person.person_time']
+
+# Printing/Call function
+def option2():
+    person_country = Person.person_time.copy()
+    person_time = [convert_time(i) for i in Person.person_time]
+    person_name = [i for i in Person.person_name]
+    for i in range(len(person_name)):
+        print(f'{person_name[i]} : {person_country[i]} : {person_time[i]}')
 
 
 
 # for item in Person.person_time:
 #     datetime.datetime.now(tz=pytz.timezone(item)).strftime(forma)
 
-person_time = [convert_time(i) for i in Person.person_time]
-print_name_zones = {Person.person_name[i] : person_time[i] for i in range(len(Person.person_name))}
-for x in print_name_zones.keys():
-    print(f'{x} : {print_name_zones[x]}')
 
 
-# Exporting 
-with open('person_timezone.csv', 'w') as f:
-    writer = csv.writer(f)
-    for i in range(len(Person.person_name)):
-        row = Person.person_name[i], Person.person_time[i]
-        writer.writerow(row)
-    
+
+# res = "\n".join("{} : {} : {}".format(x, y, z) for x, y, z in zip(person_name, person_country, person_time))
+# print(res)
+# print_name_zones = {person_name[i] : person_time[i] for i in range(len(person_name))}
+# for x in print_name_zones.keys():
+#     print(f'{x} : {print_name_zones[x]}')
+
+
+# Exporting user list and timezone information to csv
+
+
+
+# if person_time == False:
+#     person_time = []
+#     return person_time
+# else:
+#     print("Can't import a file after adding users.\nPlease restart the application and import before adding users")
+
+# print(person_time)
+# print(person_name)
 
     # for i in range(len(Person.person_name)):
     #     f.write("{} {}\n".format(Person.person_name[i], Person.person_time[i]))
