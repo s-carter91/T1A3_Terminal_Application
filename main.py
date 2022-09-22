@@ -80,7 +80,7 @@ def option1():
 
 # Option 3:
 
-def export_csv():
+def option3():
     with open('person_timezone.csv', 'w') as f:
         writer = csv.writer(f)
         writer.writerow(Person.person_name)
@@ -98,7 +98,7 @@ def import_csv():
         Person.person_name=imported_data[0]
         Person.person_time=imported_data[1]
     f.close()
-import_csv()
+
 # option1()
 # with open('person_timezone.csv', 'r') as f:
 #     csv_reader = csv.reader(f)
@@ -159,19 +159,34 @@ def option2():
     # for i in range(len(Person.person_name)):
     #     f.write("{} {}\n".format(Person.person_name[i], Person.person_time[i]))
 
+print('Welcome to the TimeZo')
+print('Do you have a file to import?')
+print('(If this is your first time using the applcation select no)')
+options = ['Yes', 'No']
+terminal_menu = TerminalMenu(options)
+start_menu_entry_index = terminal_menu.show()
+if start_menu_entry_index == 0:
+    import_csv()
+else:
+    print('No file imported, taking you to the main menu')
 
-
-# main_menu_entry_index = ' '
-# while main_menu_entry_index != 'Close Application':
-#     print('Welcome to the Main Menu')
-#     print('Please select what you would like to do')
-#     options = ['Add People to your List', 'View current times for all people added to your list', 'Import List', 'Export List', 'Close Application']
-#     terminal_menu = TerminalMenu(options)
-#     main_menu_entry_index = terminal_menu.show()
-#     add_another_person = 'Yes'
-#     if options[main_menu_entry_index] == 'Add People to your List':
-#         while add_another_person == 'Yes':
-#             option1()
+print('Welcome to the Main Menu')
+print('Please select what you would like to do')
+options = ['Add People to your List', 'View current times for all people added to your list', 'Export List', 'Close Application']
+terminal_menu = TerminalMenu(options)
+main_menu_entry_index = terminal_menu.show()
+while main_menu_entry_index != 3:
+    if main_menu_entry_index == 0:
+        option1()
+    elif main_menu_entry_index == 1:
+        option2()
+    elif main_menu_entry_index == 2:
+        option3()
+    print('Main Menu')
+    options = ['Add People to your List', 'View current times for all people added to your list', 'Export List', 'Close Application']
+    terminal_menu = TerminalMenu(options)
+    main_menu_entry_index = terminal_menu.show()
+        
 
 # def countries():
 #     options = ["America", "Australia", "Europe"]
