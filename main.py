@@ -1,21 +1,17 @@
 import time
-import datetime
-import pytz
-from simple_term_menu import TerminalMenu
 import csv
+from simple_term_menu import TerminalMenu
+import myfunctions
+from myfunctions import Person
+
 # import myfunctions
 # import myclass
 
 # person_list = []
 
-class Person:
-    person_name = []
-    person_time = []
-    def __init__(self, name, time_zone):
-        Person.person_name.append(name)
-        Person.person_time.append(time_zone)
-        self.name = name
-        self.time_zone = time_zone
+
+
+
     
     # def __str__(self):
     #     return f'Name = {self.name}, time_zone = {self.time_zone}'
@@ -29,75 +25,19 @@ class Person:
     #         Person.
     #     ]
     
-def countries():
-    options = ["America", "Australia", "Europe"]
-    terminal_menu = TerminalMenu(options)
-    menu_entry_index = terminal_menu.show()
-    # print(f"You have selected {options[menu_entry_index]}!")
-    if options[menu_entry_index] == 'Australia':
-        return australia()
-    elif options[menu_entry_index] == 'Europe':
-        return europe()
-    elif options[menu_entry_index] == 'America':
-        return america()
-    else:
-        print('Nope')
-def australia():
-    options = [i for i in pytz.all_timezones if i.startswith('Australia')]
-    terminal_menu = TerminalMenu(options)
-    menu_entry_index = terminal_menu.show()
-    person_time_zone = options[menu_entry_index]
-    return person_time_zone
-def america():
-    options = [i for i in pytz.all_timezones if i.startswith('America')]
-    terminal_menu = TerminalMenu(options)
-    menu_entry_index = terminal_menu.show()
-    person_time_zone = options[menu_entry_index]
-    return person_time_zone
-def europe():
-    options = [i for i in pytz.all_timezones if i.startswith('Europe')]
-    terminal_menu = TerminalMenu(options)
-    menu_entry_index = terminal_menu.show()
-    person_time_zone = options[menu_entry_index]
-    return person_time_zone
 
-def convert_time(timez):
-    return datetime.datetime.now(tz=pytz.timezone(timez)).strftime(forma)
 
-forma = '%d-%m-%Y %H:%M'
 
-def option1():
-    add_another_person = True
-    while add_another_person != 'No':
-        Person(name = input('Please type persons name: '), time_zone = countries())
-        print('Would you like to add another person? \n')
-        options = ['Yes', 'No']
-        terminal_menu = TerminalMenu(options)
-        add_menu_entry_index = terminal_menu.show()
-        add_another_person = options[add_menu_entry_index]
+
+
 
 # option1()
 
 # Option 3:
 
-def option3():
-    with open('person_timezone.csv', 'w') as f:
-        writer = csv.writer(f)
-        writer.writerow(Person.person_name)
-        writer.writerow(Person.person_time)
-        # for i in range(len(Person.person_name)):
-        #     row = Person.person_name[i], Person.person_time[i]
-        #     writer.writerow(row)
-    f.close()
 
 # export_csv()
-def import_csv():
-    with open('person_timezone.csv', 'r') as f:
-        csv_reader = csv.reader(f)
-        imported_data =list(csv_reader)
-        Person.person_name=imported_data[0]
-        Person.person_time=imported_data[1]
-    f.close()
+
 
 # option1()
 # with open('person_timezone.csv', 'r') as f:
@@ -121,12 +61,7 @@ def import_csv():
 #     location = data['Person.person_time']
 
 # Printing/Call function
-def option2():
-    person_country = Person.person_time.copy()
-    person_time = [convert_time(i) for i in Person.person_time]
-    person_name = [i for i in Person.person_name]
-    for i in range(len(person_name)):
-        print(f'{person_name[i]} : {person_country[i]} : {person_time[i]}')
+
 
 
 
@@ -166,7 +101,7 @@ options = ['Yes', 'No']
 terminal_menu = TerminalMenu(options)
 start_menu_entry_index = terminal_menu.show()
 if start_menu_entry_index == 0:
-    import_csv()
+    myfunctions.import_csv()
 else:
     print('No file imported, taking you to the main menu')
 
@@ -177,11 +112,11 @@ terminal_menu = TerminalMenu(options)
 main_menu_entry_index = terminal_menu.show()
 while main_menu_entry_index != 3:
     if main_menu_entry_index == 0:
-        option1()
+        myfunctions.option1()
     elif main_menu_entry_index == 1:
-        option2()
+        myfunctions.option2()
     elif main_menu_entry_index == 2:
-        option3()
+        myfunctions.option3()
     print('Main Menu')
     options = ['Add People to your List', 'View current times for all people added to your list', 'Export List', 'Close Application']
     terminal_menu = TerminalMenu(options)
