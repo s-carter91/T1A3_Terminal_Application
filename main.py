@@ -2,7 +2,6 @@ import time
 import csv
 from simple_term_menu import TerminalMenu
 import myfunctions
-from myfunctions import Person
 
 # import myfunctions
 # import myclass
@@ -161,26 +160,3 @@ while main_menu_entry_index != 3:
 # person_list[0:20].time_zone = datetime.datetime.now(tz=pytz.timezone(Person.time_zone)
 # person2 = Person(name = 'Jeff', time_zone = countries())
 
-# person2.time_zone = datetime.datetime.now(tz=pytz.timezone(person2.time_zone))
-
-# for k, v in zoneinfo.available_timezones():
-#     print(f' the value of {k} is {v}')
-# Person.person_time = datetime.datetime.now(tz=pytz.timezone(Person.person_time))
-
-
-
-# Person.person_dict.values() = datetime.datetime.now(tz=pytz.timezone(Person.person_dict.values()))
-
-# print(f'{person1.name} - {person1.time_zone.strftime(format)}')
-# print_name_zones = {[Person.person_name]: Person.person_time}
-
-# print(f'{Person.person_name[0]} : {Person.person_time[0]}')
-# for key, value in print_name_zones.items():
-#     print("{} : {}".format(key, value))
-# def option2():
-# print_name_zones = {Person.person_name[i] : Person.person_time[i] for i in range(len(Person.person_name))}
-# for x in print_name_zones.keys():
-#     print(f'{x} : {print_name_zones[x]}')
-# print(print_name_zones)
-
-# print(Person.time_zone)
