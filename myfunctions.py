@@ -5,6 +5,9 @@ from simple_term_menu import TerminalMenu
 
 
 class Person:
+    '''Creates a person instance then stores name
+    and time zone values to people list
+    '''
     people = []
     def __init__(self, name, time_zone):
         self.name = name
@@ -13,6 +16,9 @@ class Person:
 
     @staticmethod
     def find_person():
+        '''Returns index of an element withing the Person.people list.
+        Allows printing of a specific index in the list
+        '''
         options = map(str, Person.people)
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
@@ -20,12 +26,15 @@ class Person:
 
     @staticmethod
     def get_all_person():
+        '''Returns Person.people list to allow for printing'''
         return Person.people
 
     def my_name(self):
+        '''used to retun name of Person.people elements'''
         return(self.name)
 
     def my_time(self):
+        '''used to retun time zone of Person.people elements'''
         return(self.time_zone)
 
     def __str__(self):
@@ -35,39 +44,44 @@ class Person:
     #     return (f'{self.my_name()} : {self.my_time()}')
 
 def countries():
+    '''Returns  users options of countries to pick from
+    to add as the timezone for instances created from
+    the Person class.
+    '''
     options = ['America', 'Australia', 'Europe']
     terminal_menu = TerminalMenu(options)
     country_menu_entry_index = terminal_menu.show()
-    # print(f"You have selected {options[menu_entry_index]}!")
-    if options[country_menu_entry_index] == 'Australia':
-        return australia()
-    elif options[country_menu_entry_index] == 'Europe':
-        return europe()
-    elif options[country_menu_entry_index] == 'America':
-        return america()
-def australia():
-    options = [i for i in pytz.all_timezones if i.startswith('Australia')]
+    print(f"You have selected {options[country_menu_entry_index]}")
+    return cities(options[country_menu_entry_index])
+
+def cities(name):
+    '''Lists cities from pytz list that start with name parameter as options.'''
+    options = [i for i in pytz.all_timezones if i.startswith(name)]
     terminal_menu = TerminalMenu(options)
-    menu_entry_index = terminal_menu.show()
-    person_time_zone = options[menu_entry_index]
-    return person_time_zone
-def america():
-    options = [i for i in pytz.all_timezones if i.startswith('America')]
-    terminal_menu = TerminalMenu(options)
-    menu_entry_index = terminal_menu.show()
-    person_time_zone = options[menu_entry_index]
-    return person_time_zone
-def europe():
-    options = [i for i in pytz.all_timezones if i.startswith('Europe')]
-    terminal_menu = TerminalMenu(options)
-    menu_entry_index = terminal_menu.show()
-    return options[menu_entry_index]
+    cities_menu_entry_index = terminal_menu.show()
+    return options[cities_menu_entry_index]
+
+# def america(name):
+#     options = [i for i in pytz.all_timezones if i.startswith()]
+#     terminal_menu = TerminalMenu(options)
+#     menu_entry_index = terminal_menu.show()
+#     person_time_zone = options[menu_entry_index]
+#     return person_time_zone
+# def europe():
+#     options = [i for i in pytz.all_timezones if i.startswith('Europe')]
+#     terminal_menu = TerminalMenu(options)
+#     menu_entry_index = terminal_menu.show()
+#     return options[menu_entry_index]
 
 def convert_time(timez):
+    '''Converts pytz recognised timezone to a formatted date and time string.'''
     date_time_format = '%d-%m-%Y %H:%M'
     return datetime.now(tz=pytz.timezone(timez)).strftime(date_time_format)
 
 def import_csv():
+    '''imports data from csv with name person_timezone.csv
+    and creates a Person instance with imported data
+    '''
     with open('person_timezone.csv', 'r') as f:
         csv_reader = csv.reader(f)
         imported_data =list(csv_reader)
@@ -76,12 +90,14 @@ def import_csv():
             f.close()
 
 def selection_2_menu():
+    '''Returns users selection of how to view Person.people list'''
     options = ['View Individuals Time', 'View All Peoples Times', 'Return to Main Menu']
     terminal_menu = TerminalMenu(options)
     option2_menu_entry_index = terminal_menu.show()
     return option2_menu_entry_index
-# Feature 1 uses the function below:
+
 def option1():
+    '''Calls the person class to create a user.'''
     add_another_person = True
     while add_another_person != 'No':
         Person(name = input('Please type persons name: '), time_zone = countries())
@@ -91,28 +107,18 @@ def option1():
         add_menu_entry_index = terminal_menu.show()
         add_another_person = options[add_menu_entry_index]
 
-
-# Feature 3 uses the function below:
 def option3():
+    '''Exports Person.people list csv named person_timezone.csv'''
     with open('person_timezone.csv', 'w') as f:
         writer = csv.writer(f)
         for i in Person.get_all_person():
             writer.writerow([i.name, i.time_zone])
-        print('''\nYour List of people has now been exported.
- Next time you run the application, you may import this file.\n''')
+        print('\nYour list of people has now been exported.'
+' Next time you run the application, you may import this file.\n')
         f.close()
 
-# y = Person.get_all_person()
-# print(y.mytime())
-# y = Person.get_all_person()
-# y.mytime.convert_time
-
-        # options = map(str, Person.people)
-        # terminal_menu = TerminalMenu(options)
-        # menu_entry_index = terminal_menu.show()
-        # return Person.people[menu_entry_index]
-
 def option2():
+    '''Loop menu to execute based on return of selection_menu_2'''
     option2_menu_entry_index = selection_2_menu()
     while option2_menu_entry_index != 2:
         if option2_menu_entry_index == 0:
@@ -121,18 +127,24 @@ def option2():
             option_2_call_all()
         options = ["View Individuals Time", "View All Peoples Times", 'Return to Main Menu']
         terminal_menu = TerminalMenu(options)
-        option2_menu_entry_index = terminal_menu.show()    
-
+        option2_menu_entry_index = terminal_menu.show()
 
 def option_2_call_individual():
+    '''Prints name and formatted time zone of element returned
+    from find_person
+    '''
     x = Person.find_person()
     print(x.my_name(), convert_time(x.my_time()))
 
 def option_2_call_all():
+    '''Prints all elements names and converted timezones 
+    returned from get_all_person
+    '''
     for i in Person.get_all_person():
         print(f'{i.my_name()} - {convert_time(i.my_time())}')
 option1()
 option2()
+
 # print(Person..my_name(), convert_time(Person.people.my_time()))
 # convert_time (Person.get_all_person.my_time())
 # print(Person.get_all_person())
@@ -143,15 +155,3 @@ option2()
 # print(Person.my_time)
 # print(Person.people)
 # add_another_person = True
-# while add_another_person != 'No':
-#     count = 0
-#     count += 1
-#     Person(name = input('Please type persons name: '), time_zone = countries())
-#     store_people = []
-#     store_people.append(f'{Person.person_dict} {count}')
-#     print('Would you like to add another person? \n')
-#     options = ['Yes', 'No']
-#     terminal_menu = TerminalMenu(options)
-#     add_menu_entry_index = terminal_menu.show()
-#     add_another_person = options[add_menu_entry_index]
-    

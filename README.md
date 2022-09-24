@@ -1,7 +1,10 @@
 
+###Error Handling:
 
-PEP8 :
+Sigted the menuProactive error handling by using the menus.
 
-With library imports, I have imported specific methods from the library where possible
+###PEP8 :
+
+With library imports, I have imported specific methods from the library where possible  
 Also listed in the correct order as per the documentation (1: Standard library imports 2: Related third party imports 3: Local application/library specific imports)
 
