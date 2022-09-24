@@ -10,9 +10,16 @@ class Person:
     '''
     people = []
     def __init__(self, name, time_zone):
-        self.name = name
+        self.name = name.capitalize()
         self.time_zone = time_zone
-        Person.people.append(self)
+        if name != None:
+            Person.people.append(self)
+        else:
+            print('Please enter a name')
+        # if name not in self.people:
+        #     Person.people.append(self)
+        # else:
+        #     print('There is already a user with the same name. Try again by adding a last name')
 
     @staticmethod
     def find_person():
@@ -39,7 +46,6 @@ class Person:
 
     def __str__(self):
         return (f'{self.name}, {self.time_zone}')
-
 
 def countries():
     '''Returns  users options of countries to pick from
@@ -91,6 +97,12 @@ def option1():
         add_another_person = options[add_menu_entry_index]
 
 
+# def check_duplicate():
+#     for i in Person.get_all_person()
+#         if i.my_name 
+
+
+
 def selection_2():
     '''Loop menu to execute based on return of selection_menu_2'''
     option2_menu_entry_index = selection_2_menu()
@@ -112,12 +124,28 @@ def selection_2_menu():
     return option2_menu_entry_index
 
 
+def update_time_zone():
+    '''Updates already stored persons time zone'''
+    print('Please select the person you would like to update the time zone of?\n')
+    x = Person.find_person()
+    print(f'Please select the time zone that you want to move {x.name} to')
+    x.time_zone = countries()
+    print(f"{x.name}'s time zone has been update to {x.time_zone}") 
+    return x.time_zone
+
+def remove_person():
+    print('Please select the person you would like to update the time zone of?\n')
+    x = Person.find_person()
+    del x
+
+
 def selection_2_call_individual():
     '''Prints name and formatted time zone of element returned
     from find_person
     '''
+    print('Please select the person you would like to view the current time for')
     x = Person.find_person()
-    print(x.my_name(), convert_time(x.my_time()))
+    print(f'{x.my_name()} - {x.my_time()} - {convert_time(x.my_time())}')
 
 
 def option_2_call_all():
@@ -125,8 +153,11 @@ def option_2_call_all():
     returned from get_all_person
     '''
     for i in Person.get_all_person():
-        print(f'{i.my_name()} - {convert_time(i.my_time())}')
-
+        print(f'{i.my_name()} - {i.my_time()} - {convert_time(i.my_time())}')
+option1()
+remove_person()
+# selection_2_call_individual()
+option_2_call_all()
 
 def option3():
     '''Exports Person.people list csv named person_timezone.csv'''
@@ -137,6 +168,3 @@ def option3():
         print('\nYour list of people has now been exported.'
 ' Next time you run the application, you may import this file.\n')
         f.close()
-
-option1()
-option2()
