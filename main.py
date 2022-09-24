@@ -90,10 +90,7 @@ import myfunctions
 # print(person_time)
 # print(person_name)
 
-    # for i in range(len(Person.person_name)):
-    #     f.write("{} {}\n".format(Person.person_name[i], Person.person_time[i]))
-
-print('Welcome to the TimeZo')
+print('Welcome to the Time Zoco')
 print('Do you have a file to import?')
 print('(If this is your first time using the applcation select no)')
 options = ['Yes', 'No']
