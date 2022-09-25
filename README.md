@@ -39,4 +39,9 @@ The second feature allows the end user to display the current times of the peopl
 
 ##### Feature 3 - Import and Export of Stored People
 
-The third feature provides a way for the user to import the stored list via a CSV file or export the current stored list to a CSV file. When the user runs the applcation, they will be asked if they want to import a file of people (advised to tick no if it's the first time running the app). Once 
+The third feature provides a way for the user to import the stored list via a CSV file or export the current stored list to a CSV file. When the user starts the applcation, they will be asked if they want to import a file of people (advised to tick no if it's the first time running the app). This is treated similar to a save file which is stored locally. The user can export their list of people using the export option from the main menu.
+
+
+### Implemtnatation Plan
+
+The implementation plan was created through Trello. It appears to be a very popular tool for good reason. 
