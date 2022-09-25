@@ -13,7 +13,7 @@ With library imports, I have imported specific methods from the library where po
 Also listed in the correct order as per the documentation (1: Standard library imports 2: Related third party imports 3: Local application/library specific imports)
 
 ##### Maximum Line Length
-No single line of code is longer than the 99 characters that PEP8 states as a maximum character per line limit (except if Docstring or Comment which have a maximum line length of 72 characters). D and classes which are under the 72 character max per line imposed by PEP8 for comments and docstrings.
+No single line of code is longer than the 99 characters that PEP8 states as a maximum character per line limit (except if Docstring or Comment which have a maximum line length of 72 characters).
 
 ##### General PEP8 Formatting
 Double blank lines have been added around top level functions and classes.
@@ -22,7 +22,7 @@ Double blank lines have been added around top level functions and classes.
 
 ##### One-line and Multi-line Docstrings
 
-Docstrings have been added to all functions and formatted correctly based on if they are single or multi-line as per PEP-257. 
+Docstrings have been added to all functions and formatted correctly based on if they are single or multi-line as per PEP-257.
 
 
 ##### 

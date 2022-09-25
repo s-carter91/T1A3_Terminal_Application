@@ -1,5 +1,6 @@
 from datetime import datetime
 import csv
+
 import pytz
 from simple_term_menu import TerminalMenu
 
@@ -12,14 +13,7 @@ class Person:
     def __init__(self, name, time_zone):
         self.name = name.capitalize()
         self.time_zone = time_zone
-        if name != None:
-            Person.people.append(self)
-        else:
-            print('Please enter a name')
-        # if name not in self.people:
-        #     Person.people.append(self)
-        # else:
-        #     print('There is already a user with the same name. Try again by adding a last name')
+        Person.people.append(self)
 
     @staticmethod
     def find_person():
@@ -60,9 +54,10 @@ class Person:
 
 
 class NoUsersToDisplay(Exception):
-    pass
+    '''Custom Exception when no users are stored and print is called'''
 
 def check_numbers():
+    '''Raises NoUsersToDisplay custom exception when required'''
     val = Person.people
     if len(val) == 0:
         raise NoUsersToDisplay('\nThere are no users to display!\n')
@@ -71,9 +66,10 @@ def check_numbers():
 
 
 class IncorrectName(Exception):
-    pass
+    '''Custom Exception called when name is 0 characters long'''
 
 def get_name():
+    '''Raises IncorrectName custom exception when required'''
     val = input('Please enter the persons name: ')
     if len(val) == 0:
         raise IncorrectName('\nPersons name cannot be empty!\n')
@@ -81,33 +77,25 @@ def get_name():
         return val
 
 
-# class DuplicateName(IncorrectName):
-#     pass
-
-# class EmptyNameInput(Exception):
-#     def __init__(self, message):
-#         super().__init__(message)
-
-# message = 'Persons name cannot be empty'
-
-
-# def check_name_empty1(self):
-#     if len(self) == 0:
-#         raise EmptyNameInput(message)
-#     return(self) 
-
 def startup():
-    print('Welcome to the Time Zoco')
+    '''Startup menu that asks user if they want to import CSV'''
+    print('\nWELCOME TO TIME ZOCO!\n')
     print('Do you have a file to import?')
-    print('(If this is your first time using the applcation select no)')
+    print('(If this is your first time using the applcation select no)\n')
     options = ['Yes', 'No']
     terminal_menu = TerminalMenu(options)
     start_menu_entry_index = terminal_menu.show()
-    if start_menu_entry_index == 0:
-        import_csv()
-        print(f'You have imported ')
+    while start_menu_entry_index == 0:
+        try:
+            import_csv()
+            print(f'You have imported {len(Person.people)} people.\n')
+            break
+        except FileNotFoundError:
+            print('CSV file does not exist. No data has been imported.\n')
+            break
     else:
-        print('No file imported, taking you to the main menu')
+        print('No file imported, taking you to the main menu!\n')
+
 
 def import_csv():
     '''imports data from csv with name person_timezone.csv
@@ -117,8 +105,13 @@ def import_csv():
         csv_reader = csv.reader(f)
         imported_data =list(csv_reader)
         for each_line in imported_data:
-            Person(each_line[0], each_line[1])
-            f.close()
+            try:
+                convert_time(each_line[1])
+                Person(each_line[0], each_line[1])
+            except pytz.exceptions.UnknownTimeZoneError:
+                print(f'Error, {each_line[1]} is not a valid timezone.'
+                f' {each_line[0]} was not imported!\n')
+        f.close()
 
 
 def countries():
@@ -152,20 +145,8 @@ def convert_time(timez):
     return datetime.now(tz=pytz.timezone(timez)).strftime(date_time_format)
 
 
-# def check_if_importing():
-#     print('Welcome to the Time Zoco')
-#     print('Do you have a file to import?')
-#     print('(If this is your first time using the applcation select no)')
-#     options = ['Yes', 'No']
-#     terminal_menu = TerminalMenu(options)
-#     start_menu_entry_index = terminal_menu.show()
-#     if start_menu_entry_index == 0:
-#         import_csv()
-#     else:
-#         print('No file imported, taking you to the main menu')
-
-
 def main_menu_options():
+    '''Displays Main Menu Options'''
     options = [
     'Add, edit or remove people',
      'View current time for created people',
@@ -179,8 +160,8 @@ def main_menu_options():
 
 def main_menu():
     '''Main menu using while loop'''
-    print('Welcome to the Main Menu')
-    print('Please select what you would like to do')
+    print('Welcome to the Main Menu!\n')
+    print('Please select what you would like to do\n')
     main_menu_selection = main_menu_options()
     while main_menu_selection != 3:
         if main_menu_selection == 0:
@@ -206,19 +187,6 @@ def main_menu_option_1():
         option2_menu_entry_index = person_list_update_choice()
 
 
-# def check_name_empty():
-#     '''Error handling for Empty Name field'''
-#     x = ''
-#     while x == '':
-#         x = input('Please enter the persons name: ')
-#         try:
-#             check_name_empty1(x)
-#         except len(x) == 0:
-#             # print('Persons name cannot be empty')
-#             raise EmptyNameInput()
-#         else:
-#             return x
-
 def check_name_empty():
     '''Error handling for Empty Name field'''
     x = ''
@@ -228,35 +196,20 @@ def check_name_empty():
             return x
         except IncorrectName as err:
             print(err)
-        #     return x
-        # except if len(x) == 0:
-        #         print('Persons name cannot be empty')
-        # else:
-        #     return x
-
-# def check_name_empty():
-#     '''Error handling for Empty Name field'''
-#     x = ''
-#     while x == '':
-#         x = input('Please enter the persons name: ')
-#         if len(x) == 0:
-#             print('Persons name cannot be empty')
-#         else:
-#             return x
 
 
 def check_name(self):
-    # x = ' '
-    # while x == ' ':
-    z=[]
+    '''Manual error handing to check for duplicates'''
+    z = []
     for i in Person.get_all_person():
         z.append(i.my_name())
     if self in z:
         del self
-        print('\nThat person already exists, please try another name!\n')
+        print('\nThat person already exists, please input another name!\n')
         return None
     else:
         return self
+
 
 def add_person():
     '''Calls the person class to create a user.'''
@@ -303,9 +256,6 @@ def main_menu_option_2():
     option2_menu_entry_index = display_choices()
     while option2_menu_entry_index != 2:
         if option2_menu_entry_index == 0:
-            # if len(Person.people) == 0:
-            #     print('cannot display empty list of people')
-            # else:
             try:
                 check_numbers()
                 display_individual()
@@ -334,7 +284,6 @@ def display_individual():
     '''Prints name and formatted time zone of element returned
     from find_person
     '''
-
     print('Please select the person you would like to view the current time for')
     x = Person.find_person()
     print(f'{x.my_name()} - {x.my_time()} - {convert_time(x.my_time())}')
@@ -345,8 +294,7 @@ def display_all():
     returned from get_all_person
     '''  
     for i in Person.get_all_person():
-        print(f'{i.my_name()} - {i.my_time()} - {convert_time(i.my_time())}')
-    
+        print(f'{i.my_name()} - {i.my_time()} - {convert_time(i.my_time())}')   
 
 
 def main_menu_option_3():
@@ -358,12 +306,3 @@ def main_menu_option_3():
         print('\nYour list of people has now been exported.'
 ' Next time you run the application, you may import this file.\n')
         f.close()
-
-
-
-
-# startup()
-main_menu()
-# # remove_person()
-# selection_2_call_individual()
-# option_2_call_all()
