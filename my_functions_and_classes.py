@@ -119,8 +119,8 @@ def countries():
     to add as the timezone for instances created from
     the Person class.
     '''
-    print('Please select the Continent/Country/Area!')
-    print('(If you would prefer to select from GMT, please select Etc from the menu)')
+    print('\nPlease select the Continent/Country/Area!')
+    print('(If you would prefer to select from GMT, please select Etc from the menu)\n')
     options = [
         'America', 'Asia', 'Atlantic', 'Australia', 'Canada', 'Egypt', 'Europe', 'Japan',
          'NZ', 'Pacific', 'Poland', 'Portugal', 'Singapore', 'Turkey', 'US', 'Etc'
@@ -229,7 +229,8 @@ def add_person():
 
 def person_list_update_choice():
     '''Returns users selection of create/edit/delete to edit Person.people list'''
-    options = ['Add new person', 'Edit persons time zone', 'Delete Person', 'Return to Main Menu']
+    print('Please select an option below\n')
+    options = ['Add new person', 'Edit persons time zone', 'Delete person', 'Return to main menu']
     terminal_menu = TerminalMenu(options)
     option2_menu_entry_index = terminal_menu.show()
     return option2_menu_entry_index
@@ -253,6 +254,7 @@ def remove_person():
 
 def main_menu_option_2():
     '''Loop menu to execute based on return of selection_menu_2'''
+    print('Please select how you would like to display current times?')
     option2_menu_entry_index = display_choices()
     while option2_menu_entry_index != 2:
         if option2_menu_entry_index == 0:
@@ -274,7 +276,7 @@ def main_menu_option_2():
 
 def display_choices():
     '''Returns users selection of how to view Person.people list'''
-    options = ['View Individuals Time', 'View All Peoples Times', 'Return to Main Menu']
+    options = ['View individuals time', 'View all peoples times', 'Return to main menu']
     terminal_menu = TerminalMenu(options)
     option2_menu_entry_index = terminal_menu.show()
     return option2_menu_entry_index
@@ -293,6 +295,7 @@ def display_all():
     '''Prints all elements names and converted timezones 
     returned from get_all_person
     '''  
+    print('List of All Added People\n')
     for i in Person.get_all_person():
         print(f'{i.my_name()} - {i.my_time()} - {convert_time(i.my_time())}')   
 
@@ -303,6 +306,6 @@ def main_menu_option_3():
         writer = csv.writer(f)
         for i in Person.get_all_person():
             writer.writerow([i.name, i.time_zone])
-        print('\nYour list of people has now been exported.'
+        print(f'\nYour list containing {len(Person.people)} people has now been exported.'
 ' Next time you run the application, you may import this file.\n')
         f.close()

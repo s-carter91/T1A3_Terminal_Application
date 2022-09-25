@@ -1,4 +1,4 @@
-import myfunctions
+import my_functions_and_classes
 
-myfunctions.startup()
-myfunctions.main_menu()
+my_functions_and_classes.startup()
+my_functions_and_classes.main_menu()
