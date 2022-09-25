@@ -1,4 +1,0 @@
-import my_functions_and_classes
-
-my_functions_and_classes.startup()
-my_functions_and_classes.main_menu()
