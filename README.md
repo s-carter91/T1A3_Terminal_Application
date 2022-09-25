@@ -2,6 +2,8 @@
 
 ## [Github Link](https://github.com/s-carter91/T1A3_Terminal_Application/tree/master)
 
+## [Vimeo Link](https://vimeo.com/753534136)
+
 ### Styling Guides
 
 #### PEP-8 - Style Guide for Python Code [PEP-8 Link](https://peps.python.org/pep-0008/#naming-conventions)
@@ -42,7 +44,7 @@ The third feature provides a way for the user to import the stored list via a CS
 
 Error Handling - When importing files, the time zone data is checked to confirm it has a corresponding time zone in the pytz database by the same name. If an error is found, the user will be made aware of the failed import and the app will continue importing the other people from the CSV
 
-### Implemtnatation Plan
+### Implementatation Plan
 
 The implementation plan was created through Trello. It appears to be a very popular tool for good reason. The lists created in Trello were:
 
@@ -57,10 +59,20 @@ The implementation plan was created through Trello. It appears to be a very popu
 
 ![Trello Feature 1](docs/feature_1_trello.png)
 
-![Trello Feature 3](docs/feature_3_trello.png
+![Trello Feature 3](docs/feature_3_trello.png)
 
 ![Trello Styling](docs/styling_trello.png)
 
 ### Testing
 
 ![Testing Table](/docs/testing_table.png)
+
+### Install Help
+
+1. Please open your command line program and input the following command to clone the files from a git repository:  
+   `git clone git@github.com:s-carter91/T1A3_Terminal_Application.git`
+2. Navigate into the src folder where the repository was cloned to using:
+   `cd src`
+3. You can now run the applcation by inputting the following command:
+   `./timezoco_wrapper.sh`
+4. (_if required_) Everything should run in a virtual environment when you run the .sh file but if the install of python fails at the beggining of the script, you can also download the latest version from this [link]!(https://www.python.org/downloads/). Once this is downloaded you can try step 3 again.
