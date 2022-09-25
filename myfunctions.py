@@ -62,25 +62,34 @@ class Person:
 class NoUsersToDisplay(Exception):
     pass
 
+def get_numbers():
+    val = 
+
 class IncorrectName(Exception):
     pass
 
-class DuplicateName(IncorrectName):
-    pass
+def get_name():
+    val = input('Please enter the persons name: ')
+    if len(val) == 0:
+        raise IncorrectName('Persons name cannot be empty')
+    else:
+        return val
 
-class EmptyNameInput(IncorrectName):
-    def __init__(self, username, message='Name field cannot be empty'):
-        self.username = username
-        self.message = message
 
-    def check_name_empty1(self):
-        if len(self) == 0:
-            raise EmptyNameInput(self)
-        return(self) 
-        
-    def __str__(self):
-        return self.message
+# class DuplicateName(IncorrectName):
+#     pass
 
+# class EmptyNameInput(Exception):
+#     def __init__(self, message):
+#         super().__init__(message)
+
+# message = 'Persons name cannot be empty'
+
+
+# def check_name_empty1(self):
+#     if len(self) == 0:
+#         raise EmptyNameInput(message)
+#     return(self) 
 
 def startup():
     print('Welcome to the Time Zoco')
@@ -164,6 +173,7 @@ def main_menu_options():
 
 
 def main_menu():
+    '''Main menu using while loop'''
     print('Welcome to the Main Menu')
     print('Please select what you would like to do')
     main_menu_selection = main_menu_options()
@@ -191,18 +201,33 @@ def main_menu_option_1():
         option2_menu_entry_index = person_list_update_choice()
 
 
+# def check_name_empty():
+#     '''Error handling for Empty Name field'''
+#     x = ''
+#     while x == '':
+#         x = input('Please enter the persons name: ')
+#         try:
+#             check_name_empty1(x)
+#         except len(x) == 0:
+#             # print('Persons name cannot be empty')
+#             raise EmptyNameInput()
+#         else:
+#             return x
+
 def check_name_empty():
     '''Error handling for Empty Name field'''
     x = ''
     while x == '':
-        try: 
-            x = input('Please enter the persons name: ')
-        except len(x) == 0:
-            print('Persons name cannot be empty')
-            raise EmptyNameInput('Name field cannot be empty')
-        else:
+        try:
+            x = get_name()
             return x
-
+        except IncorrectName as err:
+            print(err)
+        #     return x
+        # except if len(x) == 0:
+        #         print('Persons name cannot be empty')
+        # else:
+        #     return x
 
 # def check_name_empty():
 #     '''Error handling for Empty Name field'''
@@ -227,6 +252,7 @@ def check_name(self):
         return None
     else:
         return self
+
 def add_person():
     '''Calls the person class to create a user.'''
     add_another_person = True
@@ -267,13 +293,6 @@ def remove_person():
     '''Removes class instance of person'''
     print('Please select the person you would like to remove?\n')
     Person.get_person_del()
-
-
-# print(pytz.all_timezones)
-# def check_duplicate():
-#     for i in Person.get_all_person()
-#         if i.my_name 
-
 
 
 def main_menu_option_2():
@@ -325,7 +344,7 @@ def main_menu_option_3():
 
 
 
-startup()
+# startup()
 main_menu()
 # # remove_person()
 # selection_2_call_individual()
