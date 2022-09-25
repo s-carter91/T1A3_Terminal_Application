@@ -58,6 +58,30 @@ class Person:
     def __str__(self):
         return (f'{self.name}, {self.time_zone}')
 
+
+class NoUsersToDisplay(Exception):
+    pass
+
+class IncorrectName(Exception):
+    pass
+
+class DuplicateName(IncorrectName):
+    pass
+
+class EmptyNameInput(IncorrectName):
+    def __init__(self, username, message='Name field cannot be empty'):
+        self.username = username
+        self.message = message
+
+    def check_name_empty1(self):
+        if len(self) == 0:
+            raise EmptyNameInput(self)
+        return(self) 
+        
+    def __str__(self):
+        return self.message
+
+
 def startup():
     print('Welcome to the Time Zoco')
     print('Do you have a file to import?')
@@ -67,6 +91,7 @@ def startup():
     start_menu_entry_index = terminal_menu.show()
     if start_menu_entry_index == 0:
         import_csv()
+        print(f'You have imported ')
     else:
         print('No file imported, taking you to the main menu')
 
@@ -88,8 +113,11 @@ def countries():
     the Person class.
     '''
     print('Please select the Continent/Country/Area!')
-    print('(If you would prefer to select from GMT, please select ETC from the menu)')
-    options = ['America', 'Asia', 'Atlantic', 'Australia', 'Canada', 'Egypt', 'Europe', 'Japan', 'NZ', 'Pacific', 'Poland', 'Portugal', 'Singapore', 'Turkey', 'US', 'ETC']
+    print('(If you would prefer to select from GMT, please select Etc from the menu)')
+    options = [
+        'America', 'Asia', 'Atlantic', 'Australia', 'Canada', 'Egypt', 'Europe', 'Japan',
+         'NZ', 'Pacific', 'Poland', 'Portugal', 'Singapore', 'Turkey', 'US', 'Etc'
+        ]
     terminal_menu = TerminalMenu(options)
     country_menu_entry_index = terminal_menu.show()
     print(f"You have selected {options[country_menu_entry_index]}")
@@ -163,11 +191,53 @@ def main_menu_option_1():
         option2_menu_entry_index = person_list_update_choice()
 
 
+def check_name_empty():
+    '''Error handling for Empty Name field'''
+    x = ''
+    while x == '':
+        try: 
+            x = input('Please enter the persons name: ')
+        except len(x) == 0:
+            print('Persons name cannot be empty')
+            raise EmptyNameInput('Name field cannot be empty')
+        else:
+            return x
+
+
+# def check_name_empty():
+#     '''Error handling for Empty Name field'''
+#     x = ''
+#     while x == '':
+#         x = input('Please enter the persons name: ')
+#         if len(x) == 0:
+#             print('Persons name cannot be empty')
+#         else:
+#             return x
+
+
+def check_name(self):
+    # x = ' '
+    # while x == ' ':
+    z=[]
+    for i in Person.get_all_person():
+        z.append(i.my_name())
+    if self in z:
+        del self
+        print('That person already exists, please try another name')
+        return None
+    else:
+        return self
 def add_person():
     '''Calls the person class to create a user.'''
     add_another_person = True
     while add_another_person != 'No':
-        Person(name = input('Please type persons name: '), time_zone = countries())
+        name_input = None
+        while name_input == None:
+            name_input = check_name_empty()
+            print(name_input)
+            name_input = check_name(name_input)
+            print(name_input)
+        Person(name = name_input, time_zone = countries())
         print('Would you like to add another person? \n')
         options = ['Yes', 'No']
         terminal_menu = TerminalMenu(options)
@@ -251,6 +321,9 @@ def main_menu_option_3():
         print('\nYour list of people has now been exported.'
 ' Next time you run the application, you may import this file.\n')
         f.close()
+
+
+
 
 startup()
 main_menu()

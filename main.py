@@ -55,29 +55,8 @@ import myfunctions
 #             except KeyError:
 #                 data[header] = [value]
 
-# # extract the variables you want
-#     name = data['Person.person_name']
-#     location = data['Person.person_time']
-
-# Printing/Call function
 
 
-
-
-# for item in Person.person_time:
-#     datetime.datetime.now(tz=pytz.timezone(item)).strftime(forma)
-
-
-
-
-# res = "\n".join("{} : {} : {}".format(x, y, z) for x, y, z in zip(person_name, person_country, person_time))
-# print(res)
-# print_name_zones = {person_name[i] : person_time[i] for i in range(len(person_name))}
-# for x in print_name_zones.keys():
-#     print(f'{x} : {print_name_zones[x]}')
-
-
-# Exporting user list and timezone information to csv
 
 
 
