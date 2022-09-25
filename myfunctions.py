@@ -62,8 +62,13 @@ class Person:
 class NoUsersToDisplay(Exception):
     pass
 
-def get_numbers():
-    val = 
+def check_numbers():
+    val = Person.people
+    if len(val) == 0:
+        raise NoUsersToDisplay('\nThere are no users to display!\n')
+    else:
+        pass
+
 
 class IncorrectName(Exception):
     pass
@@ -71,7 +76,7 @@ class IncorrectName(Exception):
 def get_name():
     val = input('Please enter the persons name: ')
     if len(val) == 0:
-        raise IncorrectName('Persons name cannot be empty')
+        raise IncorrectName('\nPersons name cannot be empty!\n')
     else:
         return val
 
@@ -248,7 +253,7 @@ def check_name(self):
         z.append(i.my_name())
     if self in z:
         del self
-        print('That person already exists, please try another name')
+        print('\nThat person already exists, please try another name!\n')
         return None
     else:
         return self
@@ -260,9 +265,7 @@ def add_person():
         name_input = None
         while name_input == None:
             name_input = check_name_empty()
-            print(name_input)
             name_input = check_name(name_input)
-            print(name_input)
         Person(name = name_input, time_zone = countries())
         print('Would you like to add another person? \n')
         options = ['Yes', 'No']
@@ -300,9 +303,22 @@ def main_menu_option_2():
     option2_menu_entry_index = display_choices()
     while option2_menu_entry_index != 2:
         if option2_menu_entry_index == 0:
-            display_individual()
+            # if len(Person.people) == 0:
+            #     print('cannot display empty list of people')
+            # else:
+            try:
+                check_numbers()
+                display_individual()
+            except NoUsersToDisplay as err:
+                print(err)
+                break
         elif option2_menu_entry_index == 1:
-            display_all()
+            try:
+                check_numbers()
+                display_all()
+            except NoUsersToDisplay as err:
+                print(err)
+                break
         option2_menu_entry_index = display_choices()
 
 
@@ -318,6 +334,7 @@ def display_individual():
     '''Prints name and formatted time zone of element returned
     from find_person
     '''
+
     print('Please select the person you would like to view the current time for')
     x = Person.find_person()
     print(f'{x.my_name()} - {x.my_time()} - {convert_time(x.my_time())}')
@@ -326,9 +343,10 @@ def display_individual():
 def display_all():
     '''Prints all elements names and converted timezones 
     returned from get_all_person
-    '''
+    '''  
     for i in Person.get_all_person():
         print(f'{i.my_name()} - {i.my_time()} - {convert_time(i.my_time())}')
+    
 
 
 def main_menu_option_3():
