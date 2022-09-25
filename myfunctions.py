@@ -36,6 +36,17 @@ class Person:
         '''Returns Person.people list to allow for printing'''
         return Person.people
 
+    @staticmethod
+    def get_person_del():
+        '''Deletess instance of Person from Person.people list'''
+        options = map(str, Person.people)
+        terminal_menu = TerminalMenu(options)
+        menu_entry_index = terminal_menu.show()
+        del Person.people[menu_entry_index]
+
+    def __del__(self):
+        del self
+    
     def my_name(self):
         '''used to retun name of Person.people elements'''
         return(self.name)
@@ -47,12 +58,38 @@ class Person:
     def __str__(self):
         return (f'{self.name}, {self.time_zone}')
 
+def startup():
+    print('Welcome to the Time Zoco')
+    print('Do you have a file to import?')
+    print('(If this is your first time using the applcation select no)')
+    options = ['Yes', 'No']
+    terminal_menu = TerminalMenu(options)
+    start_menu_entry_index = terminal_menu.show()
+    if start_menu_entry_index == 0:
+        import_csv()
+    else:
+        print('No file imported, taking you to the main menu')
+
+def import_csv():
+    '''imports data from csv with name person_timezone.csv
+    and creates a Person instance with imported data
+    '''
+    with open('person_timezone.csv', 'r') as f:
+        csv_reader = csv.reader(f)
+        imported_data =list(csv_reader)
+        for each_line in imported_data:
+            Person(each_line[0], each_line[1])
+            f.close()
+
+
 def countries():
     '''Returns  users options of countries to pick from
     to add as the timezone for instances created from
     the Person class.
     '''
-    options = ['America', 'Australia', 'Europe']
+    print('Please select the Continent/Country/Area!')
+    print('(If you would prefer to select from GMT, please select ETC from the menu)')
+    options = ['America', 'Asia', 'Atlantic', 'Australia', 'Canada', 'Egypt', 'Europe', 'Japan', 'NZ', 'Pacific', 'Poland', 'Portugal', 'Singapore', 'Turkey', 'US', 'ETC']
     terminal_menu = TerminalMenu(options)
     country_menu_entry_index = terminal_menu.show()
     print(f"You have selected {options[country_menu_entry_index]}")
@@ -73,19 +110,60 @@ def convert_time(timez):
     return datetime.now(tz=pytz.timezone(timez)).strftime(date_time_format)
 
 
-def import_csv():
-    '''imports data from csv with name person_timezone.csv
-    and creates a Person instance with imported data
-    '''
-    with open('person_timezone.csv', 'r') as f:
-        csv_reader = csv.reader(f)
-        imported_data =list(csv_reader)
-        for each_line in imported_data:
-            Person(each_line[0], each_line[1])
-            f.close()
+# def check_if_importing():
+#     print('Welcome to the Time Zoco')
+#     print('Do you have a file to import?')
+#     print('(If this is your first time using the applcation select no)')
+#     options = ['Yes', 'No']
+#     terminal_menu = TerminalMenu(options)
+#     start_menu_entry_index = terminal_menu.show()
+#     if start_menu_entry_index == 0:
+#         import_csv()
+#     else:
+#         print('No file imported, taking you to the main menu')
 
 
-def option1():
+def main_menu_options():
+    options = [
+    'Add, edit or remove people',
+     'View current time for created people',
+     'Export list of people',
+     'Close application'
+     ]
+    terminal_menu = TerminalMenu(options)
+    main_menu_entry_index = terminal_menu.show()
+    return main_menu_entry_index
+
+
+def main_menu():
+    print('Welcome to the Main Menu')
+    print('Please select what you would like to do')
+    main_menu_selection = main_menu_options()
+    while main_menu_selection != 3:
+        if main_menu_selection == 0:
+            main_menu_option_1()
+        elif main_menu_selection == 1:
+            main_menu_option_2()
+        elif main_menu_selection == 2:
+            main_menu_option_3()
+        print('Main Menu')
+        main_menu_selection = main_menu_options()
+
+
+def main_menu_option_1():
+    '''Loop menu to execute based on return of selection_menu_2'''
+    option2_menu_entry_index = person_list_update_choice()
+    while option2_menu_entry_index != 3:
+        if option2_menu_entry_index == 0:
+            add_person()
+        elif option2_menu_entry_index == 1:
+            update_time_zone()
+        elif option2_menu_entry_index == 2:
+            remove_person()
+        option2_menu_entry_index = person_list_update_choice()
+
+
+def add_person():
     '''Calls the person class to create a user.'''
     add_another_person = True
     while add_another_person != 'No':
@@ -97,28 +175,9 @@ def option1():
         add_another_person = options[add_menu_entry_index]
 
 
-# def check_duplicate():
-#     for i in Person.get_all_person()
-#         if i.my_name 
-
-
-
-def selection_2():
-    '''Loop menu to execute based on return of selection_menu_2'''
-    option2_menu_entry_index = selection_2_menu()
-    while option2_menu_entry_index != 2:
-        if option2_menu_entry_index == 0:
-            selection_2_call_individual()
-        elif option2_menu_entry_index == 1:
-            option_2_call_all()
-        options = ["View Individuals Time", "View All Peoples Times", 'Return to Main Menu']
-        terminal_menu = TerminalMenu(options)
-        option2_menu_entry_index = terminal_menu.show()
-
-
-def selection_2_menu():
-    '''Returns users selection of how to view Person.people list'''
-    options = ['View Individuals Time', 'View All Peoples Times', 'Return to Main Menu']
+def person_list_update_choice():
+    '''Returns users selection of create/edit/delete to edit Person.people list'''
+    options = ['Add new person', 'Edit persons time zone', 'Delete Person', 'Return to Main Menu']
     terminal_menu = TerminalMenu(options)
     option2_menu_entry_index = terminal_menu.show()
     return option2_menu_entry_index
@@ -133,13 +192,40 @@ def update_time_zone():
     print(f"{x.name}'s time zone has been update to {x.time_zone}") 
     return x.time_zone
 
+
 def remove_person():
-    print('Please select the person you would like to update the time zone of?\n')
-    x = Person.find_person()
-    del x
+    '''Removes class instance of person'''
+    print('Please select the person you would like to remove?\n')
+    Person.get_person_del()
 
 
-def selection_2_call_individual():
+# print(pytz.all_timezones)
+# def check_duplicate():
+#     for i in Person.get_all_person()
+#         if i.my_name 
+
+
+
+def main_menu_option_2():
+    '''Loop menu to execute based on return of selection_menu_2'''
+    option2_menu_entry_index = display_choices()
+    while option2_menu_entry_index != 2:
+        if option2_menu_entry_index == 0:
+            display_individual()
+        elif option2_menu_entry_index == 1:
+            display_all()
+        option2_menu_entry_index = display_choices()
+
+
+def display_choices():
+    '''Returns users selection of how to view Person.people list'''
+    options = ['View Individuals Time', 'View All Peoples Times', 'Return to Main Menu']
+    terminal_menu = TerminalMenu(options)
+    option2_menu_entry_index = terminal_menu.show()
+    return option2_menu_entry_index
+
+
+def display_individual():
     '''Prints name and formatted time zone of element returned
     from find_person
     '''
@@ -148,18 +234,15 @@ def selection_2_call_individual():
     print(f'{x.my_name()} - {x.my_time()} - {convert_time(x.my_time())}')
 
 
-def option_2_call_all():
+def display_all():
     '''Prints all elements names and converted timezones 
     returned from get_all_person
     '''
     for i in Person.get_all_person():
         print(f'{i.my_name()} - {i.my_time()} - {convert_time(i.my_time())}')
-option1()
-remove_person()
-# selection_2_call_individual()
-option_2_call_all()
 
-def option3():
+
+def main_menu_option_3():
     '''Exports Person.people list csv named person_timezone.csv'''
     with open('person_timezone.csv', 'w') as f:
         writer = csv.writer(f)
@@ -168,3 +251,9 @@ def option3():
         print('\nYour list of people has now been exported.'
 ' Next time you run the application, you may import this file.\n')
         f.close()
+
+startup()
+main_menu()
+# # remove_person()
+# selection_2_call_individual()
+# option_2_call_all()

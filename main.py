@@ -103,20 +103,25 @@ else:
 
 print('Welcome to the Main Menu')
 print('Please select what you would like to do')
-options = ['Add People to your List', 'View current times for all people added to your list', 'Export List', 'Close Application']
-terminal_menu = TerminalMenu(options)
-main_menu_entry_index = terminal_menu.show()
-while main_menu_entry_index != 3:
-    if main_menu_entry_index == 0:
-        myfunctions.option1()
-    elif main_menu_entry_index == 1:
-        myfunctions.option2()
-    elif main_menu_entry_index == 2:
-        myfunctions.option3()
-    print('Main Menu')
-    options = ['Add People to your List', 'View current times for all people added to your list', 'Export List', 'Close Application']
-    terminal_menu = TerminalMenu(options)
-    main_menu_entry_index = terminal_menu.show()
+# options = [
+#     'Add, edit or remove people',
+#      'View current time for created people',
+#      'Export list of people',
+#      'Close application'
+#      ]
+# terminal_menu = TerminalMenu(options)
+# main_menu_entry_index = terminal_menu.show()
+# while main_menu_entry_index != 3:
+#     if main_menu_entry_index == 0:
+#         myfunctions.main_menu_option_1()
+#     elif main_menu_entry_index == 1:
+#         myfunctions.main_menu_option_2()
+#     elif main_menu_entry_index == 2:
+#         myfunctions.main_menu_option_3()
+#     print('Main Menu')
+#     options = ['Add People to your List', 'View current times for all people added to your list', 'Export List', 'Close Application']
+#     terminal_menu = TerminalMenu(options)
+#     main_menu_entry_index = terminal_menu.show()
         
 
 # def countries():
